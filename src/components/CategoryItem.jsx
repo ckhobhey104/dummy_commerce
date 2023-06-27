@@ -4,7 +4,16 @@ import { mobile } from "../responsive";
 const Container = styled.div`
   margin: 3px;
   height: 70vh;
+  align-items: center;
+  justify-content: center;
   position: relative;
+  filter: blur(0.6px);
+  &:hover {
+    filter: none;
+    transform: scale(0.96);
+    transition: all 0.6s ease;
+  }
+
   ${mobile({
     height: "30vh",
     width: "320px",
@@ -12,9 +21,15 @@ const Container = styled.div`
 `;
 
 const Image = styled.img`
-  width: 100%;
+  width: 320px;
   height: 100%;
   object-fit: cover;
+  filter: blur(0.6px);
+
+  &:hover {
+    filter: none;
+    transition: all 0.6s ease;
+  }
   ${mobile({
     // height: "80%",
   })}
@@ -35,6 +50,7 @@ const Info = styled.div`
 const Title = styled.h1`
   color: white;
   margin-bottom: 20px;
+  text-align: center;
 `;
 
 const Button = styled.button`

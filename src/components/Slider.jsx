@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useRef, useEffect, useState } from "react";
 import { ArrowLeftOutlined, ArrowRightOutlined } from "@material-ui/icons";
 import styled from "styled-components";
 import { sliderItems } from "./../data";
@@ -20,7 +20,8 @@ const Container = styled.div`
 const Arrow = styled.div`
   width: 50px;
   height: 50px;
-  background-color: #fff7f7;
+  /* background-color: #fff7f7; */
+  background-color: #cee7f3af;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -50,11 +51,14 @@ const Slide = styled.div`
 `;
 const ImgContainer = styled.div`
   height: 100%;
-  flex: 1;
+  width: 100%;
+  flex: 2;
 `;
 
 const Image = styled.img`
   height: 80%;
+  width: 100%;
+  /* width: "1060px"; */
   // width: 106%;
 `;
 
@@ -77,17 +81,43 @@ const Desc = styled.p`
 const Button = styled.button`
   padding: 10px;
   font-size: 20px;
-  background: transparent;
+  border: 1px solid #0297e7;
+  background: #0297e7;
+  color: white;
   cursor: pointer;
 `;
 
 const Slider = () => {
+  const timerRef = useRef(null);
   const [slideIndex, setSlideIndex] = useState(0);
+  const goToPrevious = () => {
+    const isFirstSlide = slideIndex === 0;
+    const newIndex = isFirstSlide ? sliderItems.length - 1 : slideIndex - 1;
+    setSlideIndex(newIndex);
+  };
+
+  const goToNext = useCallback(() => {
+    const isLastSlide = slideIndex === sliderItems.length - 1;
+    const newIndex = isLastSlide ? 0 : slideIndex + 1;
+    setSlideIndex(newIndex);
+  }, [slideIndex]);
+
+  useEffect(() => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+    }
+    timerRef.current = setTimeout(() => {
+      goToNext();
+    }, 5000);
+
+    return () => clearTimeout(timerRef.current);
+  }, [goToNext]);
+
   const handleClick = (direction) => {
     if (direction === "left") {
-      setSlideIndex(slideIndex > 0 ? slideIndex - 1 : 2);
+      goToPrevious();
     } else {
-      setSlideIndex(slideIndex < 2 ? slideIndex + 1 : 0);
+      goToNext();
     }
   };
   return (

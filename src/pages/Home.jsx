@@ -3,6 +3,7 @@ import Announcement from "../components/Announcement";
 import Categories from "../components/Categories";
 import Navbar from "./../components/Navbar";
 import Slider from "./../components/Slider";
+import AboutUs from "./../components/AboutUs";
 import Products from "./../components/Products";
 import Newsletter from "../components/Newsletter";
 import Footer from "../components/Footer";
@@ -13,6 +14,7 @@ const Home = () => {
       <Announcement />
       <Navbar />
       <Slider />
+      <AboutUs />
       <Categories />
       <Products />
       <Newsletter />
